@@ -1,0 +1,17 @@
+.auto-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.auto-title {
+    font-size: 40px;
+    margin-bottom: 20px;
+    color: black;
+    /* Additional styling for the title */
+}

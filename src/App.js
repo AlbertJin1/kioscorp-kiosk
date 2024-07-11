@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Screensaver from './components/Screensaver';
+import CategorySelect from './components/CategorySelect';
+import Auto from './components/Auto'; // Create this component
+import Bolts from './components/Bolts'; // Create this component
 
 const App = () => {
   const [idleTime, setIdleTime] = useState(0);
-  const idleLimit = 60; // Time in seconds
+  const idleLimit = 300; // Time in seconds
 
   useEffect(() => {
     const incrementIdleTime = () => setIdleTime((prevTime) => prevTime + 1);
@@ -32,10 +36,20 @@ const App = () => {
   const isScreensaverActive = idleTime >= idleLimit;
 
   return (
-    <div>
-      <Screensaver isActive={isScreensaverActive} />
-      <div>Your Web App Content Here</div>
-    </div>
+    <Router>
+      <div>
+        <Screensaver isActive={isScreensaverActive} />
+        {!isScreensaverActive ? (
+          <Routes>
+            <Route path="/" element={<CategorySelect />} />
+            <Route path="/auto" element={<Auto />} />
+            <Route path="/bolts" element={<Bolts />} />
+          </Routes>
+        ) : (
+          <Navigate to="/" replace />
+        )}
+      </div>
+    </Router>
   );
 };
 

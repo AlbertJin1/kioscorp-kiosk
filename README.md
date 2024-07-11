@@ -72,3 +72,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 Dependencies USED:
 npm install bootstrap sweetalert2
+npm install --save-dev @babel/plugin-proposal-private-property-in-object
+npm install react-router-dom
+npm install styled-components
