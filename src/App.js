@@ -7,7 +7,7 @@ import Bolts from './components/Bolts'; // Create this component
 
 const App = () => {
   const [idleTime, setIdleTime] = useState(0);
-  const idleLimit = 300; // Time in seconds
+  const idleLimit = 60; // Time in seconds
 
   useEffect(() => {
     const incrementIdleTime = () => setIdleTime((prevTime) => prevTime + 1);

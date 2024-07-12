@@ -8,6 +8,7 @@ import boltsImage from '../img/Categories/bolts.png';
 import './CategorySelect.css';
 import './CustomSweetAlert.css';
 
+
 const CategorySelect = () => {
     const navigate = useNavigate();
 

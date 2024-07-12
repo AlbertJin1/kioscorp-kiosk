@@ -75,3 +75,5 @@ npm install bootstrap sweetalert2
 npm install --save-dev @babel/plugin-proposal-private-property-in-object
 npm install react-router-dom
 npm install styled-components
+npm install sweetalert2
+npm install bootstrap
