@@ -1,6 +1,5 @@
 import React from 'react';
 import './Auto.css'; // Import the Auto CSS file
-import './poppins-font.css';
 
 const Auto = () => {
     return (

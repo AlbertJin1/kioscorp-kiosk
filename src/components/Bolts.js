@@ -1,6 +1,5 @@
 import React from 'react';
 import './Bolts.css'; // Import the Bolts CSS file
-import './poppins-font.css';
 
 const Bolts = () => {
     return (

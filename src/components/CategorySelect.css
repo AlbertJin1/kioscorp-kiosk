@@ -12,17 +12,17 @@
 
 .logo {
     margin: -5px;
-    width: 240px;
+    width: 400px;
 }
 
-h1 {
-    font-size: 40px;
+.kios-title {
+    font-size: 90px;
     color: white;
     margin: -10px;
 }
 
-h2 {
-    font-size: 30px;
+.category-sele {
+    font-size: 60px;
     color: white;
     margin: 15px 0;
 }
@@ -35,7 +35,7 @@ span {
     display: flex;
     justify-content: space-around;
     width: 85%;
-    margin-top: 25px;
+    margin-top: 40px;
 }
 
 .column {
@@ -45,6 +45,7 @@ span {
 .category-link {
     text-decoration: none;
     color: inherit;
+    cursor: pointer;
 }
 
 .icon-background {
@@ -55,56 +56,40 @@ span {
     border-radius: 20px;
     padding: 20px;
     border: 5px solid transparent;
-    /* Start with a transparent border */
     animation: glowBorder 3s linear infinite;
-    /* Adjust animation duration and timing function */
-
-    /* Additional styles */
-    width: 200px;
     object-fit: cover;
 }
 
 @keyframes glowBorder {
     0% {
         border-color: rgb(255, 0, 0);
-        /* Red */
         box-shadow: 0 0 10px rgb(255, 0, 0);
-        /* Optional: Add box-shadow for glow effect */
     }
-
     25% {
         border-color: rgb(255, 255, 0);
-        /* Yellow */
         box-shadow: 0 0 10px rgb(255, 255, 0);
     }
-
     50% {
         border-color: rgb(0, 255, 0);
-        /* Green */
         box-shadow: 0 0 10px rgb(0, 255, 0);
     }
-
     75% {
         border-color: rgb(0, 0, 255);
-        /* Blue */
         box-shadow: 0 0 10px rgb(0, 0, 255);
     }
-
     100% {
         border-color: rgb(255, 0, 0);
-        /* Back to Red to complete the loop */
         box-shadow: 0 0 10px rgb(255, 0, 0);
     }
 }
 
-
 .column-logo {
-    width: 200px;
+    width: 400px;
     object-fit: cover;
 }
 
 .category-title {
-    font-size: 36px;
+    font-size: 50px;
     color: white;
     margin: 15px 0;
 }
