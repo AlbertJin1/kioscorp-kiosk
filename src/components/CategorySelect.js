@@ -5,7 +5,6 @@ import logoImage from '../img/Logo/kioscorp.png'; // Replace with your actual im
 import background from '../img/Background/background.png';
 import autoImage from '../img/Categories/auto.png';
 import boltsImage from '../img/Categories/bolts.png';
-import './CategorySelect.css';
 import './CustomSweetAlert.css';
 
 
@@ -24,32 +23,97 @@ const CategorySelect = () => {
         });
     };
 
+    const styles = {
+        container: {
+            width: '100vw',
+            height: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundImage: `url(${background})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+        },
+        logo: {
+            margin: '-5px',
+            width: '400px',
+        },
+        kiosTitle: {
+            fontSize: '90px',
+            color: 'white',
+            margin: '-10px',
+        },
+        categorySele: {
+            fontSize: '60px',
+            color: 'white',
+            margin: '15px 0',
+        },
+        span: {
+            color: '#FFBD59',
+        },
+        columns: {
+            display: 'flex',
+            justifyContent: 'space-around',
+            width: '85%',
+            marginTop: '40px',
+        },
+        column: {
+            textAlign: 'center',
+        },
+        categoryLink: {
+            textDecoration: 'none',
+            color: 'inherit',
+            cursor: 'pointer',
+        },
+        iconBackground: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#FFF',
+            borderRadius: '20px',
+            padding: '20px',
+            border: '5px solid transparent',
+            animation: 'glowBorder 3s linear infinite',
+        },
+        columnLogo: {
+            width: '400px',
+            objectFit: 'cover',
+        },
+        categoryTitle: {
+            fontSize: '50px',
+            color: 'white',
+            margin: '15px 0',
+        },
+    };
+
     return (
-        <div className="category-select-container" style={{ backgroundImage: `url(${background})` }}>
-            <img src={logoImage} alt="Kioscorp Logo" className="logo" />
-            <h1 className="kios-title"><span>Universal Auto Supply</span> and <span>Bolt Center</span></h1>
-            <h2 className="category-sele">SELECT A CATEGORY</h2>
-            <div className="columns">
-                <div className="column">
+        <div style={styles.container}>
+            <img src={logoImage} alt="Kioscorp Logo" style={styles.logo} />
+            <h1 style={styles.kiosTitle}><span style={styles.span}>Universal Auto Supply</span> and <span style={styles.span}>Bolt Center</span></h1>
+            <h2 style={styles.categorySele}>SELECT A CATEGORY</h2>
+            <div style={styles.columns}>
+                <div style={styles.column}>
                     <div
-                        className="category-link"
+                        style={styles.categoryLink}
                         onClick={() => handleCategoryClick('/auto', 'Auto Supplies')}
                     >
-                        <div className="icon-background">
-                            <img src={autoImage} alt="Auto Category" className="column-logo" />
+                        <div style={styles.iconBackground}>
+                            <img src={autoImage} alt="Auto Category" style={styles.columnLogo} />
                         </div>
-                        <h3 className="category-title">AUTO SUPPLIES</h3>
+                        <h3 style={styles.categoryTitle}>AUTO SUPPLIES</h3>
                     </div>
                 </div>
-                <div className="column">
+                <div style={styles.column}>
                     <div
-                        className="category-link"
+                        style={styles.categoryLink}
                         onClick={() => handleCategoryClick('/bolts', 'Bolts')}
                     >
-                        <div className="icon-background">
-                            <img src={boltsImage} alt="Bolts Category" className="column-logo" />
+                        <div style={styles.iconBackground}>
+                            <img src={boltsImage} alt="Bolts Category" style={styles.columnLogo} />
                         </div>
-                        <h3 className="category-title">BOLTS</h3>
+                        <h3 style={styles.categoryTitle}>BOLTS</h3>
                     </div>
                 </div>
             </div>
@@ -58,3 +122,31 @@ const CategorySelect = () => {
 };
 
 export default CategorySelect;
+
+const styleSheet = document.createElement("style");
+styleSheet.type = "text/css";
+styleSheet.innerText = `
+    @keyframes glowBorder {
+        0% {
+            border-color: rgb(255, 0, 0);
+            box-shadow: 0 0 10px rgb(255, 0, 0);
+        }
+        25% {
+            border-color: rgb(255, 255, 0);
+            box-shadow: 0 0 10px rgb(255, 255, 0);
+        }
+        50% {
+            border-color: rgb(0, 255, 0);
+            box-shadow: 0 0 10px rgb(0, 255, 0);
+        }
+        75% {
+            border-color: rgb(0, 0, 255);
+            box-shadow: 0 0 10px rgb(0, 0, 255);
+        }
+        100% {
+            border-color: rgb(255, 0, 0);
+            box-shadow: 0 0 10px rgb(255, 0, 0);
+        }
+    }
+`;
+document.head.appendChild(styleSheet);

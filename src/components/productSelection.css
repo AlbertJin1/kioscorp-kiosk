@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    user-select: none;
+    /* Prevent selection globally */
+}
+
+.container {
+    width: auto;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    flex-shrink: 0;
+    padding: 20px 40px 20px 40px;
+}
+
+.header h1 {
+    font-size: 3em;
+    color: white;
+    margin: 0;
+    background-color: #033372;
+    padding: 10px 50px;
+    border-radius: 20px;
+}
+
+.header span {
+    color: #FFBD59;
+}
+
+.search-box input {
+    height: 40px;
+    width: 300px;
+    padding: 10px;
+    font-size: 1.5em;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.clear-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.5em;
+    /* Adjust size as needed */
+    color: #333;
+}
+
+.grid-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex-grow: 1;
+    overflow: hidden;
+    /* Hide overflow for transition effect */
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 380px);
+    grid-template-rows: repeat(2, 380px);
+    gap: 20px;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1;
+}
+
+.grid.transitioning {
+    opacity: 0;
+    /* Fade out during transition */
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    /* Set a fixed height to maintain layout */
+    overflow: hidden;
+    /* Hide overflow to prevent image from extending beyond the container */
+}
+
+.product img {
+    width: 100%;
+    height: 320px;
+    /* Set a fixed height for the image */
+    border-radius: 10px;
+    object-fit: cover;
+    /* Ensure the image covers the area without distortion */
+}
+
+.product h2 {
+    font-size: 2em;
+    color: #17388B;
+    margin: 0;
+    /* Ensure there's no extra margin pushing text down */
+}
+
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.5em;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    visibility: hidden;
+    /* Hide by default */
+}
+
+.left-arrow {
+    left: 30px;
+    font-size: 50px;
+}
+
+.right-arrow {
+    font-size: 50px;
+    right: 30px;
+}
+
+.arrow.visible {
+    visibility: visible;
+    /* Show when applicable */
+}
+
+.arrow:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.logo {
+    width: 200px;
+}
+
+.back-button {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.5em;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.back-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.no-products,
+.no-results {
+    height: 100%;
+    text-align: center;
+    font-size: 1.5em;
+    color: white;
+    margin: 0;
+    font-weight: 700;
+}
+
+.no-products {
+    color: #FF0000;
+    /* Red color for no product data found */
+}
+
+.no-results {
+    font-size: 4em;
+    /* Larger font size for search results not found */
+}
+
+
+.search-box {
+    position: relative;
+}
+
+.clear-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.5em;
+    /* Adjust size as needed */
+    color: #333;
+}

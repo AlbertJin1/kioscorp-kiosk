@@ -77,3 +77,4 @@ npm install react-router-dom
 npm install styled-components
 npm install sweetalert2
 npm install bootstrap
+npm install react-icons
