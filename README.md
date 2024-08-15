@@ -70,11 +70,11 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 
-Dependencies USED:
-npm install bootstrap sweetalert2
-npm install --save-dev @babel/plugin-proposal-private-property-in-object
-npm install react-router-dom
-npm install styled-components
-npm install sweetalert2
-npm install bootstrap
-npm install react-icons
+### Dependencies USED:
+- npm install bootstrap sweetalert2
+- npm install --save-dev @babel/plugin-proposal-private-property-in-object
+- npm install react-router-dom
+- npm install styled-components
+- npm install sweetalert2
+- npm install bootstrap
+- npm install react-icons
