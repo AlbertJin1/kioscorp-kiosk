@@ -4,6 +4,7 @@ import Screensaver from './components/Screensaver';
 import CategorySelect from './components/CategorySelect';
 import Auto from './components/Auto'; // Create this component
 import Bolts from './components/Bolts'; // Create this component
+import ProductList from './components/product_lists';
 
 const App = () => {
   const [idleTime, setIdleTime] = useState(0);
@@ -44,6 +45,8 @@ const App = () => {
             <Route path="/" element={<CategorySelect />} />
             <Route path="/auto" element={<Auto />} />
             <Route path="/bolts" element={<Bolts />} />
+            <Route path="/auto/products" element={<ProductList />} />
+            <Route path="/bolts/products" element={<ProductList />} />
           </Routes>
         ) : (
           <Navigate to="/" replace />
