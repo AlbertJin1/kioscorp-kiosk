@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { FaArrowLeft, FaArrowRight, FaTimes, FaPrint } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaTimes, FaShoppingCart } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 import background from '../img/Background/background.png';
 import logoImage from '../img/Logo/kioscorp.png';
 import ViewModal from './PopupModal';
+import CartModal from './CartModal';
 
 // Inline styles
 const styles = {
@@ -47,7 +49,7 @@ const styles = {
     searchInput: {
         height: '40px',
         width: '300px',
-        padding: '10px',
+        padding: '10px 40px 10px 10px', // Added right padding to accommodate the clear icon
         fontSize: '1.5em',
         borderRadius: '20px',
         border: '1px solid #ccc',
@@ -55,15 +57,15 @@ const styles = {
     },
     clearIcon: {
         position: 'absolute',
-        right: '10px',
+        right: '21%',
         top: '50%',
         transform: 'translateY(-50%)',
         cursor: 'pointer',
         fontSize: '1.5em',
         color: '#333',
     },
-    printButton: {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    cartButton: {
+        background: 'rgba(40,167,69,0.5)',
         border: 'none',
         color: 'white',
         padding: '10px',
@@ -160,9 +162,15 @@ const styles = {
         marginTop: '10px',
         padding: '5px',
         borderRadius: '4px',
+        fontSize: '20px',
+        fontWeight: 'bold',
     },
     buttonContainer: {
-        marginTop: '10px',
+        marginTop: '20px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',  // Center the buttons
+        gap: '10px',           // Add some space between the buttons
     },
     viewButton: {
         background: '#007bff',
@@ -171,7 +179,10 @@ const styles = {
         borderRadius: '5px',
         color: '#fff',
         cursor: 'pointer',
-        marginRight: '10px',
+        width: '180px',         // Adjusted width for better alignment
+        fontSize: '24px',
+        fontWeight: 'bold',
+        marginBottom: '10px',
     },
     addToCartButton: {
         background: '#28a745',
@@ -180,6 +191,9 @@ const styles = {
         borderRadius: '5px',
         color: '#fff',
         cursor: 'pointer',
+        width: '180px',         // Adjusted width for better alignment
+        fontSize: '36px',
+        fontWeight: 'bold',
     },
     arrow: {
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -244,6 +258,9 @@ const ProductList = () => {
     const [currentBatch, setCurrentBatch] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
+    const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+    const [selectedVariation, setSelectedVariation] = useState('');
 
 
     const products = [
@@ -263,6 +280,7 @@ const ProductList = () => {
 
     const handleProductSelect = (product) => {
         setSelectedProduct(product);
+        setSelectedVariation(product.variations[0] || '');
     };
 
     const handleNext = () => {
@@ -285,8 +303,63 @@ const ProductList = () => {
         setSearchTerm('');
     };
 
-    const handlePrint = () => {
-        // window.print();
+    const handleVariationChange = (event) => {
+        setSelectedVariation(event.target.value);
+    };
+
+    const handleAddToCart = () => {
+        if (selectedProduct && selectedProduct.available) {
+            const existingProductIndex = cartItems.findIndex(item => item.name === selectedProduct.name && item.selectedVariation === selectedVariation);
+            if (existingProductIndex >= 0) {
+                const updatedCartItems = [...cartItems];
+                updatedCartItems[existingProductIndex].quantity += 1;
+                setCartItems(updatedCartItems);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Added to Cart',
+                    text: `${selectedProduct.name} (${selectedVariation}) has been added to your cart.`,
+                    timer: 2000,
+                    showConfirmButton: false,
+                });
+            } else {
+                setCartItems([...cartItems, { ...selectedProduct, selectedVariation, quantity: 1 }]);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Added to Cart',
+                    text: `${selectedProduct.name} (${selectedVariation}) has been added to your cart.`,
+                    timer: 2000,
+                    showConfirmButton: false,
+                });
+            }
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Out of Stock',
+                text: 'This product is out of stock and cannot be added to the cart.',
+                timer: 2000,
+                showConfirmButton: false,
+            });
+        }
+    };
+
+    const handleCartClick = () => {
+        setIsCartModalOpen(true);
+    };
+
+    const handleCloseCartModal = () => {
+        setIsCartModalOpen(false);
+    };
+
+    const handleQuantityChange = (product, newQuantity) => {
+        if (newQuantity > 0) {
+            setCartItems(cartItems.map(item =>
+                item.name === product.name && item.selectedVariation === product.selectedVariation ? { ...item, quantity: newQuantity } : item
+            ));
+        }
+    };
+
+    const handleRemoveItem = (product) => {
+        setCartItems(cartItems.filter(item => item.name !== product.name || item.selectedVariation !== product.selectedVariation));
     };
 
     const handleViewClick = () => {
@@ -320,30 +393,43 @@ const ProductList = () => {
                         onChange={handleSearch}
                     />
                     {searchTerm && <FaTimes style={styles.clearIcon} onClick={handleClearSearch} />}
-                    <button style={styles.printButton} onClick={handlePrint}>
-                        <FaPrint />
+                    <button style={styles.cartButton} onClick={handleCartClick}>
+                        <FaShoppingCart />
                     </button>
                 </div>
+                <CartModal
+                    isOpen={isCartModalOpen}
+                    onClose={handleCloseCartModal}
+                    cartItems={cartItems}
+                    onQuantityChange={handleQuantityChange}
+                    onRemove={handleRemoveItem}
+                />
             </header>
 
             <div style={styles.contentContainer}>
                 <div style={styles.gridContainer}>
                     <div style={styles.grid}>
-                        {displayedProducts.map((product, index) => (
-                            <div
-                                key={index}
-                                style={styles.productCard}
-                                onClick={() => handleProductSelect(product)}
-                            >
-                                <img
-                                    src={product.imageUrl || 'default-product-image-url'}
-                                    alt={product.name}
-                                    style={styles.productImage}
-                                />
-                                <p style={styles.productName}>{product.name}</p>
-                                <p style={styles.productPrice}>{product.price ? product.price : 'Not Available'}</p>
+                        {displayedProducts.length > 0 ? (
+                            displayedProducts.map((product, index) => (
+                                <div
+                                    key={index}
+                                    style={styles.productCard}
+                                    onClick={() => handleProductSelect(product)}
+                                >
+                                    <img
+                                        src={product.imageUrl || 'default-product-image-url'}
+                                        alt={product.name}
+                                        style={styles.productImage}
+                                    />
+                                    <p style={styles.productName}>{product.name}</p>
+                                    <p style={styles.productPrice}>{product.price ? product.price : 'Not Available'}</p>
+                                </div>
+                            ))
+                        ) : (
+                            <div style={{ display: 'flex', flexGrow: 1 }}>
+                                <p style={styles.placeholderText}>No products found matching your search.</p>
                             </div>
-                        ))}
+                        )}
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
                         <button
@@ -367,13 +453,13 @@ const ProductList = () => {
                             {selectedProduct.imageUrl && <img src={selectedProduct.imageUrl} alt={selectedProduct.name} style={styles.productImageDetails} />}
                             <h2 style={styles.productName}>{selectedProduct.name}</h2>
                             <p style={styles.productPrice}>{selectedProduct.price ? selectedProduct.price : 'Not Available'}</p>
-                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', }}>
                                 <div style={{ ...styles.stockIndicator, ...(selectedProduct.available ? styles.stockAvailable : styles.stockOut) }} />
                                 <p>{selectedProduct.available ? 'Available' : 'Out of Stock'}</p>
                             </div>
                             {selectedProduct.variations.length > 0 && (
                                 <div style={styles.productOptions}>
-                                    <select style={styles.select}>
+                                    <select style={styles.select} value={selectedVariation} onChange={handleVariationChange}>
                                         {selectedProduct.variations.map((variation, index) => (
                                             <option key={index} value={variation}>{variation}</option>
                                         ))}
@@ -381,17 +467,21 @@ const ProductList = () => {
                                 </div>
                             )}
                             <div style={styles.buttonContainer}>
-                                <button style={styles.viewButton} onClick={handleViewClick}>View</button>
-                                <button style={styles.addToCartButton}>Add to Cart</button>
+                                <button style={styles.addToCartButton} onClick={handleAddToCart}>Add to Cart</button>
+                                <button style={styles.viewButton} onClick={handleViewClick}>View Item</button>
                             </div>
+
+                            <ViewModal
+                                isOpen={isModalOpen}
+                                onClose={handleCloseModal}
+                                product={selectedProduct}
+                            />
                         </>
                     ) : (
-                        <p style={styles.placeholderText}>Please Select A Product</p>
+                        <p style={styles.placeholderText}>Select a product to view details.</p>
                     )}
                 </div>
             </div>
-
-            <ViewModal isOpen={isModalOpen} onClose={handleCloseModal} product={selectedProduct} />
         </div>
     );
 };
